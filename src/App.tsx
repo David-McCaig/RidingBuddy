@@ -8,7 +8,12 @@ function App() {
 
   return (
     <>
-<h1>hello</h1>
+    <h1 className= " text-3xl font-bold underline">
+      Hello world!
+    </h1>
+    <div className='w-16 h-16 bg-slate-100' >
+
+    </div>
     </>
   )
 }
