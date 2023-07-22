@@ -10,6 +10,8 @@ function LoginPage() {
 
   const [authenticating, setAuthenticating] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [user, setUser] = useState<string | null>(null)
+  
 
 
 const SignInWithSocialMedia = (provider: firebase.auth.AuthProvider) =>
@@ -35,6 +37,14 @@ const SignInWithSocialMedia = (provider: firebase.auth.AuthProvider) =>
         setError(error.message);
       });
   }
+
+
+  const users = auth.currentUser?.email || null
+  console.log(users)
+
+ useEffect(() => {
+  setUser(users || null)
+ },[])
 
   const signOut = () => {
     auth.signOut()
@@ -64,6 +74,7 @@ const SignInWithSocialMedia = (provider: firebase.auth.AuthProvider) =>
         </div>
         <button onClick={signOut}>Sign Out</button>
       </div>
+      {users}
     </div>
   );
 }
