@@ -10,13 +10,15 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-
+    <>
+    <h1>hello</h1>
     <Routes>
       <Route path='/' element={<HomePage/>} />
       <Route path='/login' element={<LoginPage/>} />
       <Route path='/signup' element={<SignUp/>} />
       <Route path='/dashboard' element={<DashBoard/>} />
     </Routes>
+    </>
   )
 }
 
