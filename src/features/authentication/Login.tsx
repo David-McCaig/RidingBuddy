@@ -2,24 +2,50 @@ import { useEffect, useState } from "react";
 import GoogleButton from 'react-google-button'
 import firebase from "firebase/app";
 import { auth, Providers } from "../../utils/firebase.js";
+import { useDispatch } from 'react-redux';
+import { login, selectUser } from './userSlice.js'
+import { useSelector } from 'react-redux';
 
 function LoginPage() {
   const [authenticating, setAuthenticating] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const [user, setUser] = useState<string | null>(null)
+  
+  const dispatch = useDispatch()
 
-  const googleSignInClick = () => {
-    if (error !== '') setError('');
+  const user = useSelector(selectUser);
+
+  console.log(`this is redux info ${user?.email}`)
+
+
+  const googleSignInClick = async () => {
+    if (error !== '') 
+      setError('');
+  
     setAuthenticating(true);
-    auth.signInWithRedirect(Providers.google)
-      .catch(error => {
-        setAuthenticating(false);
-        setError(error.message);
-      });
+  
+    try {
+      await auth.signInWithRedirect(Providers.google);
+      
+    } catch (error) {
+      setAuthenticating(false);
+      setError((error as Error).message);
+    }
   }
 
   const users = auth.currentUser?.email || null;
-  console.log(users);
+ 
+  const currentUser = auth.currentUser;
+
+  useEffect(() => {
+
+    if (currentUser) {
+      dispatch(
+        login({
+          email: currentUser?.email
+        })
+      );
+    }
+  },[currentUser])
 
   useEffect(() => {
     const handleRedirectSignIn = async () => {
@@ -48,8 +74,8 @@ function LoginPage() {
   };
 
   return (
-    <div className=" " >
-      <body className="antialiased h-screen w-full flex justify-center items-center ">
+
+      <section className="antialiased h-screen w-full flex justify-center items-center ">
         <div className="sm:mx-px sm:w-full w-11/12  max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 ">
           <h1 className="text-4xl font-medium text-center">Login</h1>
 
@@ -83,38 +109,19 @@ function LoginPage() {
                 </div>
               </div>
               <button className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                 </svg>
                 <span>Login</span>
               </button>
-              <p className="text-center">Not registered yet? <a href="#" className="text-indigo-600 font-medium inline-flex space-x-1 items-center"><span>Register now </span><span><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <p className="text-center">Not registered yet? <a href="#" className="text-indigo-600 font-medium inline-flex space-x-1 items-center"><span>Register now </span><span><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg></span></a></p>
             </div>
           </form>
         </div>
-
-      </body>
-
-      <div className="AuthLogin">
-      <div className="auth-main-container">
-        <div>
-          <h1>Welcome to React App</h1>
-          <p>Please Signup to continue by choosing one of the options below.</p>
-        </div>
-        <div className="auth-btn-wrapper">
-          <GoogleButton
-            className="rounded"
-            // disabled={authenticating}
-            onClick={googleSignInClick}
-          />
-        </div>
         <button onClick={signOut}>Sign Out</button>
-      </div>
-      {users}
-    </div>
-    </div>
+      </section>
   );
 }
 
