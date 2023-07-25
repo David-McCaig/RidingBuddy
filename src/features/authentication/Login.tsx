@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import GoogleButton from 'react-google-button'
 import firebase from "firebase/app";
-import { auth, Providers } from "../utils/firebase.js";
+import { auth, Providers } from "../../utils/firebase.js";
 
 function LoginPage() {
   const [authenticating, setAuthenticating] = useState<boolean>(false);
