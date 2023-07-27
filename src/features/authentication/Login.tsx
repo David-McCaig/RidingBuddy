@@ -1,15 +1,19 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Formik, Field, Form, FormikHelpers } from "formik";
-import * as Yup from "yup"; // Import Yup for validation
+import { useNavigate } from "react-router-dom";
+import { Formik, Field, Form } from "formik";
+import * as Yup from "yup";
 import { auth, Providers } from "../../utils/firebase.js";
 import { useDispatch } from "react-redux";
 import { login, logout, selectUser } from "./userSlice.js";
 import { useSelector } from "react-redux";
 
+
 function LoginPage() {
+  
+  const navigate = useNavigate();
   const [authenticating, setAuthenticating] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -28,29 +32,16 @@ function LoginPage() {
   });
 
   const googleSignInClick = async () => {
-    if (error !== "") setError("");
-
+    if (errorMessage !== "") setErrorMessage("");
     setAuthenticating(true);
-
     try {
       await auth.signInWithRedirect(Providers.google);
-    } catch (error) {
+      
+    } catch (errorMessage) {
       setAuthenticating(false);
-      setError((error as Error).message);
+      setErrorMessage((errorMessage as Error).message);
     }
   };
-
-  const currentUser = auth.currentUser;
-
-  useEffect(() => {
-    if (currentUser) {
-      dispatch(
-        login({
-          email: currentUser?.email,
-        })
-      );
-    }
-  }, [currentUser]);
 
   useEffect(() => {
     const handleRedirectSignIn = async () => {
@@ -62,23 +53,25 @@ function LoginPage() {
         setAuthenticating(false);
       }
     };
-
     handleRedirectSignIn();
   }, []);
 
-  const signOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        console.log("Successfully signed out.");
-        dispatch(logout());
-        // You may want to redirect the user to another page after sign-out.
-      })
-      .catch((error) => {
-        console.error("Error signing out:", error);
-      });
-  };
+  const currentUser = auth.currentUser;
 
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(
+        login({
+          email: currentUser?.email,
+        })
+      );
+      navigate('/')
+    }
+  }, [currentUser]);
+
+
+
+  
   return (
     <section className="antialiased h-screen w-full flex justify-center items-center ">
       <div className="sm:mx-px sm:w-full w-11/12  max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 ">
@@ -105,21 +98,30 @@ function LoginPage() {
             email: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(
-            values: Values,
-            { setSubmitting }: FormikHelpers<Values>
-          ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
+          onSubmit={(values: Values) => {
+            auth
+              .signInWithEmailAndPassword(values.email, values.password)
+              .then((userCredential) => {
+                const user = userCredential.user;
+                dispatch(login({}));
+                // navigate('/')
+                console.log(user);
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorMessage);
+                console.log(errorCode);
+              });
           }}
         >
           {({ errors, touched }) => (
             <Form ref={formRef} className="my-10">
               <div className="flex flex-col space-y-5">
                 <label>
-                  <p className="font-medium text-slate-700 pb-2">Email address</p>
+                  <p className="font-medium text-slate-700 pb-2">
+                    Email address
+                  </p>
                   <Field
                     id="email"
                     name="email"
@@ -139,8 +141,11 @@ function LoginPage() {
                     id="password"
                     name="password"
                     type="password"
+                    autoComplete="password"
                     className={`w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none ${
-                      errors.password && touched.password ? "border-red-500" : ""
+                      errors.password && touched.password
+                        ? "border-red-500"
+                        : ""
                     }`}
                     placeholder="Enter your password"
                   />
@@ -160,9 +165,9 @@ function LoginPage() {
                     </label>
                   </div>
                   <div>
-                    <a href="#" className="font-medium text-indigo-600">
+                    <button className="font-medium text-indigo-600">
                       Forgot Password?
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <button
@@ -209,15 +214,20 @@ function LoginPage() {
                   </Link>
                 </p>
               </div>
+              {errorMessage && (
+                <div className="w-full mt-6 rounded border border-red-400">
+                  <p className=" text-red-500 text-center py-2 font-medium">
+                    {errorMessage}
+                  </p>
+                </div>
+              )}
             </Form>
           )}
         </Formik>
       </div>
-      <button onClick={signOut}>Sign Out</button>
       <p>{user?.email}</p>
     </section>
   );
 }
 
 export default LoginPage;
-
