@@ -1,29 +1,23 @@
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
+import { useGoogleSignIn } from "./hooks/useGoogleSignIn.js";
+import { useGoogleGetSignInResult } from "./hooks/useGoogleGetSignInResult.js";
+import { useSignInEmailPassword } from "./hooks/useSignInEmailPassword.js";
+import { useSignedinDispatchUserInfoAndNavigateHome } from "./hooks/useSignedinDispatchUserInfoAndNavigateHome.js";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { auth, Providers } from "../../utils/firebase.js";
-import { useDispatch } from "react-redux";
-import { login, logout, selectUser } from "./userSlice.js";
+import { selectUser } from "./userSlice.js";
 import { useSelector } from "react-redux";
 
+interface Values {
+  password: string;
+  email: string;
+}
 
 function LoginPage() {
-  
-  const navigate = useNavigate();
   const [authenticating, setAuthenticating] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const dispatch = useDispatch();
   const user = useSelector(selectUser);
-
-  const formRef = useRef(null);
-
-  interface Values {
-    password: string;
-    email: string;
-  }
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -31,47 +25,31 @@ function LoginPage() {
     password: Yup.string().required("Password is required"),
   });
 
-  const googleSignInClick = async () => {
+  const googleSignInClick = () => {
     if (errorMessage !== "") setErrorMessage("");
-    setAuthenticating(true);
-    try {
-      await auth.signInWithRedirect(Providers.google);
-      
-    } catch (errorMessage) {
-      setAuthenticating(false);
-      setErrorMessage((errorMessage as Error).message);
-    }
+    useGoogleSignIn(setAuthenticating, setErrorMessage);
   };
 
-  useEffect(() => {
-    const handleRedirectSignIn = async () => {
-      try {
-        setAuthenticating(true);
-        await auth.getRedirectResult();
-      } catch (err) {
-      } finally {
-        setAuthenticating(false);
-      }
-    };
-    handleRedirectSignIn();
-  }, []);
-
-  const currentUser = auth.currentUser;
-
-  useEffect(() => {
-    if (currentUser) {
-      dispatch(
-        login({
-          email: currentUser?.email,
-        })
-      );
-      navigate('/')
-    }
-  }, [currentUser]);
+  //custom hooks for authentication 
+  useGoogleGetSignInResult(setAuthenticating);
+  useSignedinDispatchUserInfoAndNavigateHome();
+  const { passwordErrorMessage, signInWithEmailPassword } = useSignInEmailPassword();
 
 
+  if (authenticating) {
+    return (
+      <div className="h-screen bg-white">
+        <div className="flex justify-center items-center h-full">
+          <img
+            className="h-16 w-16"
+            src="https://icons8.com/preloaders/preloaders/1488/Iphone-spinner-2.gif"
+            alt=""
+          />
+        </div>
+      </div>
+    );
+  }
 
-  
   return (
     <section className="antialiased h-screen w-full flex justify-center items-center ">
       <div className="sm:mx-px sm:w-full w-11/12  max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 ">
@@ -99,24 +77,12 @@ function LoginPage() {
           }}
           validationSchema={validationSchema}
           onSubmit={(values: Values) => {
-            auth
-              .signInWithEmailAndPassword(values.email, values.password)
-              .then((userCredential) => {
-                const user = userCredential.user;
-                dispatch(login({}));
-                // navigate('/')
-                console.log(user);
-              })
-              .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setErrorMessage(errorMessage);
-                console.log(errorCode);
-              });
+            signInWithEmailPassword(values);
+            setErrorMessage(passwordErrorMessage)
           }}
         >
           {({ errors, touched }) => (
-            <Form ref={formRef} className="my-10">
+            <Form className="my-10">
               <div className="flex flex-col space-y-5">
                 <label>
                   <p className="font-medium text-slate-700 pb-2">
@@ -225,7 +191,6 @@ function LoginPage() {
           )}
         </Formik>
       </div>
-      <p>{user?.email}</p>
     </section>
   );
 }
