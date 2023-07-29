@@ -17,7 +17,6 @@ interface Values {
 function LoginPage() {
   const [authenticating, setAuthenticating] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const user = useSelector(selectUser);
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({

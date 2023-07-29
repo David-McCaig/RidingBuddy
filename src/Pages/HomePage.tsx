@@ -11,7 +11,7 @@ function HomePage() {
   const user = useSelector(selectUser);
 
   const currentUser = auth.currentUser;
-
+  console.log(currentUser)
   useEffect(() => {
     if (currentUser) {
       dispatch(

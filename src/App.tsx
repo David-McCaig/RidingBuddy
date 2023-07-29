@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router'
 import HomePage from './Pages/HomePage'
-import LoginPage from './features/authentication/Login'
+import LoginPage from './Pages/LoginPage'
 import SignUpPage from './Pages/SignUpPage'
 import DashBoard from './Pages/DashBoard'
 import './App.css'
