@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { useGoogleSignIn } from "./hooks/useGoogleSignIn.js";
-import { useGoogleGetSignInResult } from "./hooks/useGoogleGetSignInResult.js";
-import { useSignInEmailPassword } from "./hooks/useSignInEmailPassword.js";
-import { useSignedinDispatchUserInfoAndNavigateHome } from "./hooks/useSignedinDispatchUserInfoAndNavigateHome.js";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn.js";
+import { useGoogleGetSignInResult } from "../hooks/useGoogleGetSignInResult.js";
+import { useSignInEmailPassword } from "../hooks/useSignInEmailPassword.js";
+import { useSignedinDispatchUserInfo } from "../hooks/useSignedinDispatchUserInfo.js";
 import { Link } from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { selectUser } from "./userSlice.js";
-import { useSelector } from "react-redux";
+
 
 interface Values {
   password: string;
@@ -31,9 +30,8 @@ function LoginPage() {
 
   //custom hooks for authentication 
   useGoogleGetSignInResult(setAuthenticating);
-  useSignedinDispatchUserInfoAndNavigateHome();
-  const { passwordErrorMessage, signInWithEmailPassword } = useSignInEmailPassword();
-
+  const { passwordErrorMessage, signInWithEmailPassword } = useSignInEmailPassword(setAuthenticating);
+  useSignedinDispatchUserInfo();
 
   if (authenticating) {
     return (
@@ -179,10 +177,10 @@ function LoginPage() {
                   </Link>
                 </p>
               </div>
-              {errorMessage && (
+              {errorMessage || passwordErrorMessage && (
                 <div className="w-full mt-6 rounded border border-red-400">
                   <p className=" text-red-500 text-center py-2 font-medium">
-                    {errorMessage}
+                    {errorMessage || passwordErrorMessage}
                   </p>
                 </div>
               )}

@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { useGoogleSignIn } from "./hooks/useGoogleSignIn.js";
-import { useGoogleGetSignInResult } from "./hooks/useGoogleGetSignInResult.js";
-import { useSignUpEmailPassword } from "./hooks/useSignUpEmailAndPassword.js";
-import { useSignedinDispatchUserInfoAndNavigateHome } from "./hooks/useSignedinDispatchUserInfoAndNavigateHome.js";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn";
+import { useGoogleGetSignInResult } from "../hooks/useGoogleGetSignInResult.js";
+import { useSignUpEmailPassword } from "../hooks/useSignUpEmailAndPassword.js";
+import { useSignedinDispatchUserInfo } from "../hooks/useSignedinDispatchUserInfo.js";
 import { Link } from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { selectUser } from "./userSlice.js";
-import { useSelector } from "react-redux";
 
 interface Values {
   password: string;
@@ -17,7 +15,6 @@ interface Values {
 function LoginPage() {
   const [authenticating, setAuthenticating] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const user = useSelector(selectUser);
 
   // Validation schema using Yup
   const validationSchema = Yup.object().shape({
@@ -32,8 +29,8 @@ function LoginPage() {
 
   //custom hooks for authentication 
   useGoogleGetSignInResult(setAuthenticating);
-  useSignedinDispatchUserInfoAndNavigateHome();
-  const { passwordErrorMessage, signUpEmailPassword } = useSignUpEmailPassword();
+  const { passwordErrorMessage, signUpEmailPassword } = useSignUpEmailPassword(setAuthenticating);
+  useSignedinDispatchUserInfo();
 
 
   if (authenticating) {

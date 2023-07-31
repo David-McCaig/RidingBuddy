@@ -1,5 +1,5 @@
 import React from 'react'
-import Login from '../features/authentication/Login'
+import Login from '../features/authentication/components/Login'
 
 function LoginPage() {
   return (
