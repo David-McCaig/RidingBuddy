@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import { auth } from "../../../utils/firebase";
 import { useDispatch } from "react-redux";
-import { login, selectUser } from "../userSlice";
-import { useSelector } from "react-redux";
+import { login } from "../userSlice";
+
 
 
 export const useSignedinDispatchUserInfo = () => {

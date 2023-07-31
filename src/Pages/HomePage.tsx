@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 function HomePage() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-
   useSignedinDispatchUserInfo();
 
   const signOut = () => {
