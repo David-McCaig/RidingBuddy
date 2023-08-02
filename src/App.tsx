@@ -5,10 +5,10 @@ import LoginPage from './Pages/LoginPage'
 import SignUpPage from './Pages/SignUpPage'
 import DashBoard from './Pages/DashBoard' 
 import SetUpProfilePage from './Pages/SetUpProfilePage'
+import PostARide from './Pages/PostARide'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -18,6 +18,7 @@ function App() {
       <Route path='/signup' element={<SignUpPage/>} />
       <Route path='/dashboard' element={<DashBoard/>} />
       <Route path='/setprofile' element={<SetUpProfilePage/>} />
+      <Route path='/postaride' element={<PostARide/>} />
     </Routes>
     </>
   )
