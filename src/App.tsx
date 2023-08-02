@@ -5,7 +5,7 @@ import LoginPage from './Pages/LoginPage'
 import SignUpPage from './Pages/SignUpPage'
 import DashBoard from './Pages/DashBoard' 
 import SetUpProfilePage from './Pages/SetUpProfilePage'
-import PostARide from './Pages/PostARide'
+import PostARide from './Pages/PostARidePage'
 import './App.css'
 
 function App() {
