@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import ButtonPrimary from "../../../Components/ButtonPrimary";
 import LoadingBar from "../../../Components/LoadingBar";
+import FormErrorAlert from "../../../Components/FormErrorAlert";
 import { GenericHTMLFormElement } from "axios";
 import { db } from "../../../utils/firebase";
 import { collection, addDoc } from "firebase/firestore";
@@ -12,31 +13,32 @@ function PoastAride() {
   const [messageValError, setMessageValError] = useState(false);
   const [postTitle, setPostTitle] = useState("");
   const [postMessage, setPostMessage] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const PostARideSubmit = async (
     e: React.FormEvent<GenericHTMLFormElement>
   ) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     try {
-      const docRef = await addDoc(collection(db, "ridePosts"), {
+      await addDoc(collection(db, "ridePosts"), {
         ride_description: postMessage,
         ride_title: postTitle,
         user_id: 3,
         user_name: "Dave",
       });
-      setLoading(false)
-      navigate('/')
+      setLoading(false);
+      navigate("/");
     } catch (e) {
-      console.error("Error adding document: ", e);
+      setError("Error posting ride: " + e);
     }
   };
- 
+
   if (loading) {
-    return <LoadingBar/>
+    return <LoadingBar />;
   }
 
   return (
@@ -70,6 +72,9 @@ function PoastAride() {
               <p className="text-red-500 text-xs italic">Field Required</p>
             )}
           </div>
+        </div>
+        <div className="mb-8">
+        {error && <FormErrorAlert message={error}/>}
         </div>
         <div className="flex justify-end">
           <ButtonPrimary children={"Cancel"} />
