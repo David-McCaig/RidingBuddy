@@ -9,10 +9,13 @@ export const useSignedinDispatchUserInfo = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log(user)
       if (user) {
         dispatch(login({
           email: user?.email,
-          displayName: user?.displayName || null
+          displayName: user?.displayName || null,
+          photoUrl: user?.photoURL,
+          userId: user?.uid
         }));
       } 
     }); 
