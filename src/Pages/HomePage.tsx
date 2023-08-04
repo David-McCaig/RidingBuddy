@@ -8,7 +8,7 @@ function HomePage() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   useSignedinDispatchUserInfo();
-
+  
   const signOut = () => {
     auth
       .signOut()

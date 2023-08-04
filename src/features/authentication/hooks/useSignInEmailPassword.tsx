@@ -1,9 +1,11 @@
 // hooks/useSignInEmailPassword.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { auth } from "../../../utils/firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../userSlice";
+import "firebase/compat/auth";
+
 
 // Custom hook for signing in with email and password
 export const useSignInEmailPassword = (
@@ -19,10 +21,8 @@ export const useSignInEmailPassword = (
   }) => {
     try {
       setAuthenticating(true)
-      const userCredential = await auth.signInWithEmailAndPassword(
-        values.email,
-        values.password
-      );
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
       const user = userCredential.user;
       dispatch(login({
         email: user?.email,

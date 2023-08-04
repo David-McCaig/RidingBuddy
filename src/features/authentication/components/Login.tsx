@@ -25,10 +25,11 @@ function LoginPage() {
 
   const googleSignInClick = () => {
     if (errorMessage !== "") setErrorMessage("");
-    useGoogleSignIn(setAuthenticating, setErrorMessage);
+    googleSignIn()
   };
 
   //custom hooks for authentication 
+  const { googleSignIn } = useGoogleSignIn(setAuthenticating, setErrorMessage);
   useGoogleGetSignInResult(setAuthenticating);
   const { passwordErrorMessage, signInWithEmailPassword } = useSignInEmailPassword(setAuthenticating);
   useSignedinDispatchUserInfo();

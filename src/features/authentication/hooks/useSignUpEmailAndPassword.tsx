@@ -1,12 +1,15 @@
 // hooks/useSignInEmailPassword.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { auth } from "../../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { login } from "../userSlice";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // Custom hook for signing in with email and password
 export const useSignUpEmailPassword = (
   setAuthenticating: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  const dispatch = useDispatch();
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>(""); // Move the state hook inside this custom hook
   const navigate = useNavigate();
   const signUpEmailPassword = async (values: {
@@ -15,7 +18,14 @@ export const useSignUpEmailPassword = (
   }) => {
     try {
       setAuthenticating(true)
-      await auth.createUserWithEmailAndPassword(values.email, values.password);
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
+      const user = userCredential.user;
+      dispatch(login({
+        email: user?.email,
+        displayName: user?.displayName
+      }));
+      // await auth.createUserWithEmailAndPassword(values.email, values.password);
       navigate("/setprofile");
     } catch (error) {
       const errorCode = (error as { code?: string })?.code;

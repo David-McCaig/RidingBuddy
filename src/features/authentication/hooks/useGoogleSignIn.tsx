@@ -1,17 +1,27 @@
 import { useNavigate } from "react-router";
-import { auth, Providers } from "../../../utils/firebase";
+import { Providers } from "../../../utils/firebase";
+import { getAuth, signInWithRedirect } from "firebase/auth";
 
-export const useGoogleSignIn = async (
+export const useGoogleSignIn = (
   setAuthenticating: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const navigate = useNavigate();
-  setAuthenticating(true);
-  try {
-    await auth.signInWithRedirect(Providers.google);
-    navigate("/")
-  } catch (errorMessage) {
-    setAuthenticating(false);
-    setErrorMessage((errorMessage as Error).message);
-  }
+
+  const googleSignIn = async () => {
+    const auth = getAuth();
+    setAuthenticating(true);
+  
+    try {
+      // await auth.signInWithRedirect(Providers.google);
+      await signInWithRedirect(auth, Providers)
+    } catch (errorMessage) {
+      setErrorMessage((errorMessage as Error).message);
+    } finally {
+      setAuthenticating(false);
+    }
+
+  };
+
+  return { googleSignIn } ;
 };

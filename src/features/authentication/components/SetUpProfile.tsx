@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useState } from "react";
 import { useSignedinDispatchUserInfo } from "../hooks/useSignedinDispatchUserInfo";
-import { auth } from "../../../utils/firebase";
+import { getAuth, updateProfile } from "firebase/auth";
 import UploadProfile from "../../../Components/UploadProfile";
 import { useNavigate } from "react-router";
 
@@ -14,20 +14,20 @@ function SetUpProfile() {
 
   const profileInfoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const user = auth.currentUser;
+    const auth = getAuth();
+    const user = auth.currentUser; // Get the current authenticated user
+  
     if (user) {
-      user
-        ?.updateProfile({
-          displayName: userName, // Use the userName state here
-          photoURL: "https://example.com/jane-q-user/profile.jpg", // You can change this if needed
-        })
+      updateProfile(user, {
+        displayName: userName,
+        photoURL: "https://example.com/jane-q-user/profile.jpg"
+      })
         .then((res) => {
           console.log(res);
           navigate("/");
         })
         .catch((err) => {
           console.log(err);
-
         });
     }
   };
