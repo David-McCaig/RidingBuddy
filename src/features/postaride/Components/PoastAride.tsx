@@ -1,12 +1,22 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useSignedinDispatchUserInfo } from "../../authentication/hooks/useSignedinDispatchUserInfo";
 import ButtonPrimary from "../../../Components/ButtonPrimary";
 import LoadingBar from "../../../Components/LoadingBar";
 import FormErrorAlert from "../../../Components/FormErrorAlert";
 import { GenericHTMLFormElement } from "axios";
 import { db } from "../../../utils/firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../authentication/userSlice";
+
+type UserInfo = {
+  displayName: string,
+  photoUrl:string,
+  userId: string
+}
 
 function PoastAride() {
   const [titleValError, setTitleValError] = useState(false);
@@ -16,8 +26,14 @@ function PoastAride() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  useSignedinDispatchUserInfo();
+  
+  const loggedInUser = useSelector(selectUser);
+  const { displayName, photoUrl, userId }:UserInfo = loggedInUser ?? {} ;
+  console.log(loggedInUser)
   const navigate = useNavigate();
-
+ 
+  
   const PostARideSubmit = async (
     e: React.FormEvent<GenericHTMLFormElement>
   ) => {
@@ -27,8 +43,10 @@ function PoastAride() {
       await addDoc(collection(db, "ridePosts"), {
         ride_description: postMessage,
         ride_title: postTitle,
-        user_id: 3,
-        user_name: "Dave",
+        user_id: userId,
+        user_name: displayName,
+        likes: 0,
+        PhotoUrl: photoUrl,
       });
       setLoading(false);
       navigate("/");
@@ -38,7 +56,7 @@ function PoastAride() {
   };
 
   if (loading) {
-    return <LoadingBar />;
+    return <LoadingBar />
   }
 
   return (
@@ -74,7 +92,7 @@ function PoastAride() {
           </div>
         </div>
         <div className="mb-8">
-        {error && <FormErrorAlert message={error}/>}
+          {error && <FormErrorAlert message={error} />}
         </div>
         <div className="flex justify-end">
           <ButtonPrimary children={"Cancel"} />

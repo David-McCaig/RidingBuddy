@@ -9,7 +9,7 @@ export const useSignedinDispatchUserInfo = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log(user)
+
       if (user) {
         dispatch(login({
           email: user?.email,
