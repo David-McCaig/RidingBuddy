@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   HomeOutlined,
   AlignLeftOutlined,
@@ -8,7 +9,7 @@ import {
   ProfileOutlined,
   GlobalOutlined,
   LoginOutlined,
-  FormOutlined
+  FormOutlined,
 } from "@ant-design/icons";
 
 function NavBar() {
@@ -51,24 +52,22 @@ function NavBar() {
               <AlignLeftOutlined className="text-2xl" />
             </button>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <HomeOutlined className="text-2xl" />
-                <span className="ml-3 mt-2">Home</span>
-              </a>
+              <Link to={"/"}>
+                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <HomeOutlined className="text-2xl" />
+                  <span className="ml-3 mt-2">Home</span>
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <SendOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
-                  Post a ride
-                </span>
-              </a>
+              <Link to={"/postaride"}>
+                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <SendOutlined className="text-2xl" />
+                  <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                    Post a ride
+                  </span>
+                </a>
+              </Link>
             </li>
             <li>
               <a
@@ -76,9 +75,8 @@ function NavBar() {
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <MessageOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">Messages</span>
-                <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                  Pro
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                  Messages
                 </span>
               </a>
             </li>
@@ -88,9 +86,8 @@ function NavBar() {
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <ProfileOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">Profile</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                  Profile
                 </span>
               </a>
             </li>
@@ -104,22 +101,24 @@ function NavBar() {
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-              <LoginOutlined className="text-2xl " />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">Login</span>
-              </a>
+              <Link to={"/login"}>
+                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <LoginOutlined className="text-2xl " />
+                  <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                    Login
+                  </span>
+                </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <FormOutlined className="text-2xl " />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">Sign Up</span>
-              </a>
+              <Link to={"/signup"}>
+                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <FormOutlined className="text-2xl " />
+                  <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                    Sign Up
+                  </span>
+                </a>
+              </Link>
             </li>
           </ul>
         </div>
