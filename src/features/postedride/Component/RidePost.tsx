@@ -1,5 +1,6 @@
 import React from "react";
 import RideComment from "./RideComment";
+import RidePostComment from "./RidePostComment";
 
 function RidePost() {
   return (
@@ -69,6 +70,7 @@ function RidePost() {
           </div>
         </div>
         <RideComment/>
+        <RidePostComment/>
       </div>
     </div>
   );

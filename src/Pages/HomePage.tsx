@@ -32,7 +32,6 @@ function HomePage() {
 
   return (
     <>
-    
       <NavBar />
       <div className="sm:mt-12 sm:ml-[16rem] ">
       <PostARide />
