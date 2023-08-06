@@ -1,10 +1,10 @@
 import React from "react";
-import RidePost from "./Component/RidePosted";
+import RidePosted from "./Component/RidePosted";
 
 function index() {
   return (
     <div>
-      <RidePost />
+      <RidePosted />
     </div>
   );
 }

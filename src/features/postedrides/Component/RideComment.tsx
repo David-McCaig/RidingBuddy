@@ -1,7 +1,18 @@
 import React from "react";
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { db } from "../../../utils/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
-function RideComment() {
+function RideComment({ path }:any) {
+
+  const query = collection(db, path)
+  const [docs, loading, error] = useCollectionData (query);
+  console.log(docs)
+
+
   return (
+    <>
+    {docs?.map((comment) => (
     <div className="flex bg-white    max-w-md md:max-w-2xl ">
       <div className="flex items-start  py-6">
         <div className="">
@@ -22,8 +33,7 @@ function RideComment() {
           </div>
           <div>
             <p className="mt-3 text-gray-700 text-sm">
-              Lorem ipsum, dolor sit amet conse. Saepe optio minus rem dolor sit
-              amet!
+              {comment.comment}
             </p>
           </div>
           <div className="mt-4 flex items-center">
@@ -47,6 +57,8 @@ function RideComment() {
         </div>
       </div>
     </div>
+    ))}
+    </>
   );
 }
 

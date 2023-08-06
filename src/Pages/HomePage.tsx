@@ -1,6 +1,6 @@
 import NavBar from "../features/navigation/Components/NavBar";
 import LoadingBar from "../Components/LoadingBar";
-import PostARide from "../features/postedrides/index"
+import PostedRides from "../features/postedrides/index"
 import { useSignedinDispatchUserInfo } from "../features/authentication/hooks/useSignedinDispatchUserInfo";
 import { auth } from "../utils/firebase";
 import { logout, selectUser } from "../features/authentication/userSlice.js";
@@ -34,7 +34,7 @@ function HomePage() {
     <>
       <NavBar />
       <div className="sm:mt-12 sm:ml-[16rem] ">
-      <PostARide />
+      <PostedRides />
       </div>
     </>
   );
