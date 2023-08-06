@@ -1,5 +1,6 @@
 import NavBar from "../features/navigation/Components/NavBar";
 import LoadingBar from "../Components/LoadingBar";
+import PostARide from "../features/postedride/index"
 import { useSignedinDispatchUserInfo } from "../features/authentication/hooks/useSignedinDispatchUserInfo";
 import { auth } from "../utils/firebase";
 import { logout, selectUser } from "../features/authentication/userSlice.js";
@@ -31,10 +32,11 @@ function HomePage() {
 
   return (
     <>
+    
       <NavBar />
-      <div className=" ">HomePage</div>
-      <button onClick={signOut}>Sign Out</button>
-      <p>{user?.email}</p>
+      <div className="sm:mt-12 sm:ml-[16rem] ">
+      <PostARide />
+      </div>
     </>
   );
 }
