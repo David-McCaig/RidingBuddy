@@ -1,5 +1,5 @@
 import React from "react";
-import RidePost from "./Component/RidePost";
+import RidePost from "./Component/RidePosted";
 
 function index() {
   return (

@@ -1,15 +1,24 @@
-import React from "react";
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import RideComment from "./RideComment";
-import RidePostComment from "./RidePostComment";
+import RidePostComment from "./RidePostedComment";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../utils/firebase";
 
 function RidePost() {
+  const query = collection(db, `ridePosts`)
+
+  const [docs, loading, error] = useCollectionData (query);
+ console.log(docs)
+    
   return (
-    <div className="flex mt-4 justify-center">
+    <>
+    {docs?.map((post, i) => (
+   <div key={i} className="flex mt-4 justify-center">
       <div className="rounded-xl border p-5 drop-shadow-sm w-9/12 bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">
             <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
-            <div className="text-lg font-bold text-slate-700">Joe Smith</div>
+            <div className="text-lg font-bold text-slate-700">{post.user_name}</div>
           </div>
           <div className="flex items-center space-x-8">
             <div className="text-xs text-neutral-500">2 hours ago</div>
@@ -17,15 +26,11 @@ function RidePost() {
         </div>
 
         <div className="mt-4 mb-6">
-          <div className="mb-3 text-xl font-bold">
-            Who wants to ride the bike
-          </div>
+          <h3 className="mb-3 text-xl font-bold">
+            {post.ride_title}
+          </h3>
           <div className="text-sm text-neutral-600">
-            Aliquam a tristique sapien, nec bibendum urna. Maecenas convallis
-            dignissim turpis, non suscipit mauris interdum at. Morbi sed gravida
-            nisl, a pharetra nulla. Etiam tincidunt turpis leo, ut mollis ipsum
-            consectetur quis. Etiam faucibus est risus, ac condimentum mauris
-            consequat nec. Curabitur eget feugiat massa
+            {post.ride_description}
           </div>
         </div>
 
@@ -70,9 +75,11 @@ function RidePost() {
           </div>
         </div>
         <RideComment/>
-        <RidePostComment/>
+        <RidePostComment path={`ridePosts`} />
       </div>
     </div>
+    ))}
+    </>
   );
 }
 

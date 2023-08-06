@@ -1,6 +1,12 @@
 import React from "react";
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { db } from "../../../utils/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
-function RidePostComment() {
+function RidePostComment({ path }:any) {
+  
+  const query = collection(db, path)
+  const [docs, loading, error] = useCollectionData (query);
 
     const postACommentSubmit = (e:React.FormEvent) => {
         e.preventDefault()

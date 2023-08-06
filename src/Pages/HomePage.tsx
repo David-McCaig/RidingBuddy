@@ -1,6 +1,6 @@
 import NavBar from "../features/navigation/Components/NavBar";
 import LoadingBar from "../Components/LoadingBar";
-import PostARide from "../features/postedride/index"
+import PostARide from "../features/postedrides/index"
 import { useSignedinDispatchUserInfo } from "../features/authentication/hooks/useSignedinDispatchUserInfo";
 import { auth } from "../utils/firebase";
 import { logout, selectUser } from "../features/authentication/userSlice.js";

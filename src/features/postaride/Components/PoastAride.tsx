@@ -11,6 +11,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../authentication/userSlice";
+import { v4 as uuidv4 } from "uuid";
 
 type UserInfo = {
   displayName: string,
@@ -32,8 +33,8 @@ function PoastAride() {
   const { displayName, photoUrl, userId }:UserInfo = loggedInUser ?? {} ;
   
   const navigate = useNavigate();
- 
-  
+  const uniqueId = uuidv4();
+  console.log(uniqueId)
   const PostARideSubmit = async (
     e: React.FormEvent<GenericHTMLFormElement>
   ) => {
@@ -41,6 +42,7 @@ function PoastAride() {
     setLoading(true);
     try {
       await addDoc(collection(db, "ridePosts"), {
+        post_id: uniqueId,
         ride_description: postMessage,
         ride_title: postTitle,
         user_id: userId,
