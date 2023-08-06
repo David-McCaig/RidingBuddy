@@ -26,7 +26,7 @@ function NavBar() {
   const [showNavBar, setShowNavBar] = useState(true);
 
   const loggedInUser = useSelector(selectUser);
-  const { displayName, userId }: UserInfo = loggedInUser ?? {};
+  const { displayName, userId, photoUrl }: UserInfo = loggedInUser ?? {};
   const dispatch = useDispatch();
 
   const openNavClick = () => {
@@ -163,14 +163,14 @@ function NavBar() {
             <li>
               <div className="flex items-center pl-1 pt-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <div className="relative inline-flex items-center justify-center w-8 h-8 text-white rounded-full">
-                  <img
-                    src="https://i.pravatar.cc/40?img=3"
+                  { photoUrl && <img
+                    src={'https://res.cloudinary.com/dui1zm17r/image/upload/v1669911286/cld-sample-5.jpg'}
                     alt="user name"
                     title="user name"
                     width="40"
                     height="40"
-                    className="max-w-full rounded-full"
-                  />
+                    className="w-9 h-9 rounded-full"
+                  />}
                 </div>
 
                 <h3 className="flex-1 ml-2 whitespace-nowrap mt-1">

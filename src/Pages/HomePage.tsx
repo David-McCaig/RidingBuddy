@@ -23,18 +23,18 @@ function HomePage() {
       });
   };
 
-  if (!user) {
-    return (
-        <LoadingBar />
-    );
-  }
+  // if (!user) {
+  //   return (
+  //       <LoadingBar />
+  //   );
+  // }
 
   return (
     <>
       <NavBar />
-      {/* <div>HomePage</div>
+      <div className=" ">HomePage</div>
       <button onClick={signOut}>Sign Out</button>
-      <p>{user?.email}</p> */}
+      <p>{user?.email}</p>
     </>
   );
 }
