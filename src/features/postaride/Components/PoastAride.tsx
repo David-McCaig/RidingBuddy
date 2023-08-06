@@ -30,7 +30,7 @@ function PoastAride() {
   
   const loggedInUser = useSelector(selectUser);
   const { displayName, photoUrl, userId }:UserInfo = loggedInUser ?? {} ;
-  console.log(loggedInUser)
+  
   const navigate = useNavigate();
  
   

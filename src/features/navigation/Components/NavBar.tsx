@@ -11,9 +11,23 @@ import {
   LoginOutlined,
   FormOutlined,
 } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { auth } from "../../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { logout, selectUser } from "../../authentication/userSlice";
+
+type UserInfo = {
+  displayName: string;
+  photoUrl: string;
+  userId: string;
+};
 
 function NavBar() {
   const [showNavBar, setShowNavBar] = useState(true);
+
+  const loggedInUser = useSelector(selectUser);
+  const { displayName, userId }: UserInfo = loggedInUser ?? {};
+  const dispatch = useDispatch();
 
   const openNavClick = () => {
     showNavBar && setShowNavBar(false);
@@ -21,6 +35,18 @@ function NavBar() {
 
   const closeNavClick = () => {
     !showNavBar && setShowNavBar(true);
+  };
+
+  const signOutClick = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.log("Successfully signed out.");
+        dispatch(logout());
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
   };
 
   return (
@@ -52,28 +78,27 @@ function NavBar() {
               <AlignLeftOutlined className="text-2xl" />
             </button>
             <li>
-              <Link to={"/"}>
-                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <HomeOutlined className="text-2xl" />
-                  <span className="ml-3 mt-2">Home</span>
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/postaride"}>
-                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <SendOutlined className="text-2xl" />
-                  <span className="flex-1 ml-3 whitespace-nowrap mt-1">
-                    Post a ride
-                  </span>
-                </a>
-              </Link>
-            </li>
-            <li>
-              <a
-                href="#"
+              <Link
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                to={"/"}
               >
+                <HomeOutlined className="text-2xl" />
+                <span className="ml-3 mt-2">Home</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                to={"/postaride"}
+              >
+                <SendOutlined className="text-2xl" />
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                  Post a ride
+                </span>
+              </Link>
+            </li>
+            <li>
+              <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <MessageOutlined className="text-2xl" />
                 <span className="flex-1 ml-3 whitespace-nowrap mt-1">
                   Messages
@@ -81,10 +106,7 @@ function NavBar() {
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <ProfileOutlined className="text-2xl" />
                 <span className="flex-1 ml-3 whitespace-nowrap mt-1">
                   Profile
@@ -100,25 +122,61 @@ function NavBar() {
                 <span className="flex-1 ml-3 whitespace-nowrap mt-1">Map</span>
               </a>
             </li>
-            <li>
-              <Link to={"/login"}>
-                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <LoginOutlined className="text-2xl " />
-                  <span className="flex-1 ml-3 whitespace-nowrap mt-1">
-                    Login
-                  </span>
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/signup"}>
-                <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            {userId ? (
+              <li>
+                <button
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={signOutClick}
+                >
                   <FormOutlined className="text-2xl " />
                   <span className="flex-1 ml-3 whitespace-nowrap mt-1">
-                    Sign Up
+                    Sign out
                   </span>
-                </a>
-              </Link>
+                </button>
+              </li>
+            ) : (
+              <div>
+                <li>
+                  <Link
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    to={"/login"}
+                  >
+                    <LoginOutlined className="text-2xl " />
+                    <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                      Login
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    to={"/signup"}
+                  >
+                    <FormOutlined className="text-2xl " />
+                    <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                      Sign Up
+                    </span>
+                  </Link>
+                </li>
+              </div>
+            )}
+            <li>
+              <div className="flex items-center pl-1 pt-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <div className="relative inline-flex items-center justify-center w-8 h-8 text-white rounded-full">
+                  <img
+                    src="https://i.pravatar.cc/40?img=3"
+                    alt="user name"
+                    title="user name"
+                    width="40"
+                    height="40"
+                    className="max-w-full rounded-full"
+                  />
+                </div>
+
+                <h3 className="flex-1 ml-2 whitespace-nowrap mt-1">
+                  {displayName}
+                </h3>
+              </div>
             </li>
           </ul>
         </div>
