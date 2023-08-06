@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router'
 import HomePage from './Pages/HomePage'
+import NavBar from './features/navigation/Components/NavBar'
 import LoginPage from './Pages/LoginPage'
 import SignUpPage from './Pages/SignUpPage'
 import DashBoard from './Pages/DashBoard' 
@@ -11,7 +12,6 @@ import './App.css'
 function App() {
 
   return (
-    <>
     <Routes>
       <Route path='/' element={<HomePage/>} />
       <Route path='/login' element={<LoginPage/>} />
@@ -20,7 +20,6 @@ function App() {
       <Route path='/setprofile' element={<SetUpProfilePage/>} />
       <Route path='/postaride' element={<PostARide/>} />
     </Routes>
-    </>
   )
 }
 
