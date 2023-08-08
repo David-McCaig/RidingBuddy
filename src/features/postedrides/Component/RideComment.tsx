@@ -2,18 +2,17 @@ import React from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db } from "../../../utils/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
 
 function RideComment({ path }:any) {
 
   const query = collection(db, path)
   const [docs, loading, error] = useCollectionData (query);
-  console.log(docs)
-
-
+  
   return (
     <>
-    {docs?.map((comment) => (
-    <div className="flex bg-white    max-w-md md:max-w-2xl ">
+    {docs?.map((comment, i) => (
+    <div key={i} className="flex bg-white    max-w-md md:max-w-2xl ">
       <div className="flex items-start  py-6">
         <div className="">
 
@@ -26,32 +25,20 @@ function RideComment({ path }:any) {
           alt="avatar"
         />
             <h2 className="text-lg font-semibold text-gray-900 -mt-1">
-              Brad Adams{" "}
+              {comment.comment_user_name}
             </h2>
             <small className="text-sm text-gray-700">22h ago</small>
           </div>
           </div>
           <div>
-            <p className="mt-3 text-gray-700 text-sm">
-              {comment.comment}
+            <p className="mt-3 text-sm">
+              {comment.user_comment}
             </p>
           </div>
-          <div className="mt-4 flex items-center">
-            <div className="flex mr-2 text-gray-700 text-sm m">
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                className="w-4 h-4 mr-1"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-              <span>12</span>
+          <div className="mt-3 flex items-center text-slate-500 ">
+            <div className="flex mr-2 text-s text-slate-500 hover:text-slate-700">
+            <HeartOutlined className='mt-1 mr-1 text-slate-500 hover:text-slate-700'/>
+              <span className="">12</span>
             </div>
           </div>
         </div>

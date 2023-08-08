@@ -34,7 +34,8 @@ function PoastAride() {
   
   const navigate = useNavigate();
   const uniqueId = uuidv4();
-  console.log(uniqueId)
+  console.log(photoUrl)
+  
   const PostARideSubmit = async (
     e: React.FormEvent<GenericHTMLFormElement>
   ) => {
@@ -42,7 +43,7 @@ function PoastAride() {
     setLoading(true);
     try {
       await addDoc(collection(db, "ridePosts"), {
-        post_id: uniqueId,
+        // post_id: uniqueId,
         ride_description: postMessage,
         ride_title: postTitle,
         user_id: userId,
