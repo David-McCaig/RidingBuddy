@@ -1,12 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db } from "../../../utils/firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useState } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import RideComment from "./RideComment";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../authentication/userSlice";
 import { useSignedinDispatchUserInfo } from "../../authentication/hooks/useSignedinDispatchUserInfo";
@@ -16,16 +11,17 @@ type UserInfo = {
   photoUrl:string,
   userId: string
 }
+interface RideDataProps {
+  id: string;
+}
 
-
-function RidePostComment({id}:any) {
+function RidePostComment({id}:RideDataProps) {
 
   const [comment, setComment] = useState('');
   
-  const dispatch = useDispatch();
   const loggedInUser = useSelector(selectUser);
   useSignedinDispatchUserInfo();
-  const { displayName, photoUrl, userId }:UserInfo = loggedInUser ?? {} ;
+  const { displayName, userId }:UserInfo = loggedInUser ?? {} ;
 
 
   const PostARideSubmit = async (
@@ -48,7 +44,7 @@ function RidePostComment({id}:any) {
   return (
     <>
     
-      <div className="flex">
+      <div className="flex border-t pt-4">
       <img
         className="w-8 h-8 rounded-full object-cover mr-2 shadow"
         src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
@@ -60,9 +56,9 @@ function RidePostComment({id}:any) {
           value={comment}
           name="postContent"
           placeholder="Add a comment"
-          className="ml-2 w-full h-16 resize-none"
+          className="ml-2 w-full h-16 resize-none outline-none focus:bg-neutral-50 rounded-md"
         />
-        <button className="text-slate-500">Post</button>
+        <button className="text-slate-400 ml-3 ">Post</button>
       </form>
     </div>
     
