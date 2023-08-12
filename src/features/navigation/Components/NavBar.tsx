@@ -50,7 +50,7 @@ function NavBar() {
   };
 
   return (
-    <nav>
+    <nav className="" >
       <button
         onClick={openNavClick}
         type="button"
@@ -59,16 +59,15 @@ function NavBar() {
         <span className="sr-only">Open sidebar</span>
         <AlignLeftOutlined className="text-2xl" />
       </button>
-
+    <div className="xl:w-[265px] 2xl:w-[370px]">
       <aside
         className={
           showNavBar
-            ? `fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0`
+            ? `fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 xl:pl-36 2xl:pl-64 xl:w-[400px] xl:h-[1000rem] 2xl:w-[506px]`
             : "fixed top-0 left-0 z-40 w-64 h-screen transition-transform  sm:translate-x-0"
         }
       >
-        
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 ">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <button
               onClick={closeNavClick}
@@ -182,6 +181,7 @@ function NavBar() {
           </ul>
         </div>
       </aside>
+      </div>
     </nav>
   );
 }

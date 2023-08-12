@@ -9,7 +9,17 @@ interface ProfileCardProps {
 function ProfileCard({ photo, userName, useProfilePhoto }:ProfileCardProps ) {
   return (
     <>
-      <div className=" xl:w-[25rem] mt-12 break-words bg-white shadow-lg rounded-xl ">
+    <div
+      className="hidden xl:flex xl:w-[258px] xl:h-[10rem] " // Remove the sticky class from here
+    >
+      <div
+        className="xl:w-[258px] mt-12 break-words bg-white shadow-lg rounded-xl"
+        style={{
+          position: "fixed",
+          top: "5rem", // Adjust this value as needed (including padding)
+           // Add a zIndex to make sure it appears above other content
+        }}
+      >
         <div className="px-6">
           <div className="flex flex-wrap justify-center">
             <div className="w-full flex justify-center">
@@ -55,6 +65,7 @@ function ProfileCard({ photo, userName, useProfilePhoto }:ProfileCardProps ) {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

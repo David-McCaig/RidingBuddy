@@ -5,6 +5,7 @@ import { db } from "../../../utils/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import LoadingBar from "../../../Components/LoadingBar";
 import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 
 interface RideData {
   id: string;
@@ -33,6 +34,8 @@ function RidePost() {
   if (!snapshot || snapshot.empty) {
     return <div>No data found.</div>;
   }
+
+
 
   // Extract data and document IDs from the snapshot
   const docs: RideData[] =
