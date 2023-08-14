@@ -25,29 +25,24 @@ function HomePage() {
       });
   };
 
-  // if (!user) {
-  //   return (
-  //       <LoadingBar />
-  //   );
-  // }
+  console.log(user);
 
   return (
-    <div className="flex  ">
-      <NavBar />
-      <div className="sm:w-[15rem] lg:w-[18rem] xl:w-[135px] h-[20rem]"></div>
-      <div className="flex-1 overflow-y-auto">
+    <div className="flex bg-gray-50 ">
+        <NavBar />
+      <div className="sm:w-[15rem] lg:w-[18rem] xl:w-[100px] h-[20rem]"></div>
+      <div className="flex-1 overflow-y-auto pt-12">
         <PostedRides />
       </div>
-      {/* <div className="xl:w-[25rem] xl:h-[10rem]"> */}
+
       <div className="hidden right-6 top-16 xl:flex xl:pr-36 2xl:pr-64">
-        <ProfileCard
-          photo={""}
-          userName={"Brock Cambel"}
-          useProfilePhoto={
-            "https://res.cloudinary.com/dui1zm17r/image/upload/v1669911283/cld-sample.jpg"
-          }
-        />
-      {/* </div> */}
+        {user && (
+          <ProfileCard
+            photo={""}
+            userName={user?.displayName}
+            useProfilePhoto={user?.photoUrl}
+          />
+        )}
       </div>
     </div>
   );

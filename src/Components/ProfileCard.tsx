@@ -9,15 +9,14 @@ interface ProfileCardProps {
 function ProfileCard({ photo, userName, useProfilePhoto }:ProfileCardProps ) {
   return (
     <>
-    <div
-      className="hidden xl:flex xl:w-[258px] xl:h-[10rem] " // Remove the sticky class from here
+    <section
+      className="hidden xl:flex xl:w-[258px] xl:h-[10rem] " 
     >
       <div
-        className="xl:w-[258px] mt-12 break-words bg-white shadow-lg rounded-xl"
+        className="xl:w-[320px] mt-12 break-words bg-white shadow-lg rounded-xl"
         style={{
           position: "fixed",
-          top: "5rem", // Adjust this value as needed (including padding)
-           // Add a zIndex to make sure it appears above other content
+          top: "5rem", 
         }}
       >
         <div className="px-6">
@@ -26,7 +25,7 @@ function ProfileCard({ photo, userName, useProfilePhoto }:ProfileCardProps ) {
               <div className="">
                 <img
                   src={useProfilePhoto}
-                  className="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
+                  className="shadow-xl rounded-full h-32 w-32 object-cover align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
                 />
               </div>
             </div>
@@ -66,7 +65,7 @@ function ProfileCard({ photo, userName, useProfilePhoto }:ProfileCardProps ) {
           </div>
         </div>
       </div>
-      </div>
+      </section>
     </>
   );
 }

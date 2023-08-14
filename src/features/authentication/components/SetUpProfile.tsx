@@ -20,7 +20,7 @@ function SetUpProfile() {
     if (user) {
       updateProfile(user, {
         displayName: userName,
-        photoURL: "https://example.com/jane-q-user/profile.jpg"
+        photoURL: "https://res.cloudinary.com/dui1zm17r/image/upload/v1669911283/cld-sample.jpg"
       })
         .then((res) => {
           console.log(res);

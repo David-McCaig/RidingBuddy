@@ -6,7 +6,7 @@ function UploadProfile() {
       <div className="w-36 ">
         <img
           className=" rounded-full"
-          src="https://images.pexels.com/photos/2690323/pexels-photo-2690323.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          src="https://res.cloudinary.com/dui1zm17r/image/upload/v1669911283/cld-sample.jpg"
           alt=""
         />
       </div>

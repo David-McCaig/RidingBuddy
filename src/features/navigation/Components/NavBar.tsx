@@ -63,11 +63,11 @@ function NavBar() {
       <aside
         className={
           showNavBar
-            ? `fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 xl:pl-36 2xl:pl-64 xl:w-[400px] xl:h-[1000rem] 2xl:w-[506px]`
+            ? `fixed top-16 left-0 z-40 w-64 rounded-medium  transition-transform -translate-x-full sm:translate-x-0 xl:pl-[5.1rem] 2xl:pl-64 xl:w-[400px]  2xl:w-[506px] `
             : "fixed top-0 left-0 z-40 w-64 h-screen transition-transform  sm:translate-x-0"
         }
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="h-full px-3 py-6 w-64 overflow-y-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg sm:ml-6 md:ml-8 xl:ml-0 ">
           <ul className="space-y-2 font-medium">
             <button
               onClick={closeNavClick}
@@ -79,36 +79,36 @@ function NavBar() {
             </button>
             <li>
               <Link
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 to={"/"}
               >
                 <HomeOutlined className="text-2xl" />
-                <span className="ml-3 mt-2">Home</span>
+                <span className="ml-3 mt-2 text-2xl">Home</span>
               </Link>
             </li>
             <li>
               <Link
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 to={"/postaride"}
               >
                 <SendOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">
                   Post a ride
                 </span>
               </Link>
             </li>
             <li>
-              <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <a className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <MessageOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">
                   Messages
                 </span>
               </a>
             </li>
             <li>
-              <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <ProfileOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+              <a className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <ProfileOutlined className="text-xl" />
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">
                   Profile
                 </span>
               </a>
@@ -116,20 +116,20 @@ function NavBar() {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <GlobalOutlined className="text-2xl" />
-                <span className="flex-1 ml-3 whitespace-nowrap mt-1">Map</span>
+                <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">Map</span>
               </a>
             </li>
             {userId ? (
               <li>
                 <button
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   onClick={signOutClick}
                 >
                   <FormOutlined className="text-2xl " />
-                  <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                  <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">
                     Sign out
                   </span>
                 </button>
@@ -138,22 +138,22 @@ function NavBar() {
               <div>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     to={"/login"}
                   >
                     <LoginOutlined className="text-2xl " />
-                    <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                    <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">
                       Login
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     to={"/signup"}
                   >
                     <FormOutlined className="text-2xl " />
-                    <span className="flex-1 ml-3 whitespace-nowrap mt-1">
+                    <span className="flex-1 ml-3 whitespace-nowrap mt-1 text-2xl">
                       Sign Up
                     </span>
                   </Link>
@@ -161,7 +161,7 @@ function NavBar() {
               </div>
             )}
             <li>
-              <div className="flex items-center pl-1 pt-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <div className="flex items-center pl-1 pt-3 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <div className="relative inline-flex items-center justify-center w-8 h-8 text-white rounded-full">
                   { photoUrl && <img
                     src={'https://res.cloudinary.com/dui1zm17r/image/upload/v1669911286/cld-sample-5.jpg'}
@@ -173,7 +173,7 @@ function NavBar() {
                   />}
                 </div>
 
-                <h3 className="flex-1 ml-2 whitespace-nowrap mt-1">
+                <h3 className="flex-1 ml-2 whitespace-nowrap mt-1 text-2xl">
                   {displayName}
                 </h3>
               </div>
