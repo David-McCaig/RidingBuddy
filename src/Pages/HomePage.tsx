@@ -28,14 +28,14 @@ function HomePage() {
   console.log(user);
 
   return (
-    <div className="flex bg-gray-50 ">
+    <div className="flex sm:justify-center bg-gray-50 xl:px-32 ">
         <NavBar />
-      <div className="sm:w-[15rem] lg:w-[18rem] xl:w-[100px] h-[20rem]"></div>
-      <div className="flex-1 overflow-y-auto pt-12">
+      {/* <div className="sm:w-[15rem] lg:w-[18rem] xl:w-[100px] h-[20rem]"></div> */}
+      <div className="pt-12 ">
         <PostedRides />
       </div>
 
-      <div className="hidden right-6 top-16 xl:flex xl:pr-36 2xl:pr-64">
+      <div className="pt-[5rem]">
         {user && (
           <ProfileCard
             photo={""}

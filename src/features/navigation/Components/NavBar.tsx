@@ -50,7 +50,7 @@ function NavBar() {
   };
 
   return (
-    <nav className="" >
+    <nav className=" sm:mt-16 " >
       <button
         onClick={openNavClick}
         type="button"
@@ -59,16 +59,16 @@ function NavBar() {
         <span className="sr-only">Open sidebar</span>
         <AlignLeftOutlined className="text-2xl" />
       </button>
-    <div className="xl:w-[265px] 2xl:w-[370px]">
+    <div className="sm:sticky sm:top-16 xl:w-[265px]">
       <aside
         className={
           showNavBar
-            ? `fixed top-16 left-0 z-40 w-64 rounded-medium  transition-transform -translate-x-full sm:translate-x-0 xl:pl-[5.1rem] 2xl:pl-64 xl:w-[400px]  2xl:w-[506px] `
-            : "fixed top-0 left-0 z-40 w-64 h-screen transition-transform  sm:translate-x-0"
+            ? `fixed top-16 sm:static left-0 z-40 w-64 rounded-medium  transition-transform -translate-x-full sm:translate-x-0  `
+            : "fixed top-0 left-0 sm:static z-40 w-64 h-screen transition-transform  sm:translate-x-0"
         }
       >
-        <div className="h-full px-3 py-6 w-64 overflow-y-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg sm:ml-6 md:ml-8 xl:ml-0 ">
-          <ul className="space-y-2 font-medium">
+        <div className="h-full px-3 py-6 w-64 overflow-y-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg sm:pt-0 sm:ml-6 md:ml-8 xl:ml-0 ">
+          <ul className="space-y-2 font-medium"> 
             <button
               onClick={closeNavClick}
               type="button"
@@ -77,6 +77,14 @@ function NavBar() {
               <span className="sr-only">Open sidebar</span>
               <AlignLeftOutlined className="text-2xl" />
             </button>
+            <li>
+              <Link
+                className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                to={"/"}
+              >
+                <span className="ml-0 mt-2 text-2xl">RidingBuddy</span>
+              </Link>
+            </li>
             <li>
               <Link
                 className="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
