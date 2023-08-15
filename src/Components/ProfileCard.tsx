@@ -10,14 +10,10 @@ function ProfileCard({ photo, userName, useProfilePhoto }:ProfileCardProps ) {
   return (
     <>
     <section
-      className="hidden xl:flex xl:w-[258px] xl:h-[10rem] " 
+      className="hidden sticky top-16 xl:flex  " 
     >
       <div
         className="xl:w-[320px] mt-12 break-words bg-white shadow-lg rounded-xl"
-        style={{
-          position: "fixed",
-          top: "5rem", 
-        }}
       >
         <div className="px-6">
           <div className="flex flex-wrap justify-center">
