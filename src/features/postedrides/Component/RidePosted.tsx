@@ -47,8 +47,8 @@ function RidePost() {
         {/* <div className="sm:w-72 sm:h-9 xl:w-80"></div> */}
         <div className="flex flex-col">
           {docs?.map((post) => (
-            <div key={post.id} className="flex justify-center w-[100%] mt-4 ">
-              <div className="rounded-xl border p-5 drop-shadow-sm w-9/12 bg-white">
+            <div key={post.id} className="flex justify-center mt-4 ">
+              <div className="rounded-xl border p-5 drop-shadow-sm w-9/12 xl:w-11/12 bg-white">
                 <div className="flex w-full items-center justify-between border-b pb-3">
                   <div className="flex items-center space-x-3">
                     <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
