@@ -5,6 +5,7 @@ import { useSignedinDispatchUserInfo } from "../hooks/useSignedinDispatchUserInf
 import { getAuth, updateProfile } from "firebase/auth";
 import UploadProfile from "../../../Components/UploadProfile";
 import { useNavigate } from "react-router";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 function SetUpProfile() {
 

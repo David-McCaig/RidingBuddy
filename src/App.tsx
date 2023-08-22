@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Routes, Route } from 'react-router'
 import HomePage from './Pages/HomePage'
 import NavBar from './features/navigation/Components/NavBar'
+import ProfileCard from './Components/ProfileCard'
 import LoginPage from './Pages/LoginPage'
 import SignUpPage from './Pages/SignUpPage'
 import DashBoard from './Pages/DashBoard' 
@@ -19,7 +20,7 @@ function App() {
       <Route path='/dashboard' element={<DashBoard/>} />
       <Route path='/setprofile' element={<SetUpProfilePage/>} />
       <Route path='/postaride' element={<PostARide/>} />
-    </Routes>
+    </Routes> 
   )
 }
 
