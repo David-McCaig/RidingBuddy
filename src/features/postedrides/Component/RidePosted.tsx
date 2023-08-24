@@ -16,6 +16,7 @@ import LoadingBar from "../../../Components/LoadingBar";
 import { CommentOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../hooks/reduxTypeScriptHooks";
 import { selectUser } from "../../authentication/userSlice";
 
 interface postDataProps {
@@ -35,7 +36,7 @@ function RidePost({
   loading,
   error,
 }: postDataProps) {
-  const loggedInUser = useSelector(selectUser);
+  const loggedInUser = useAppSelector(selectUser);
   const [likes, setLikes] = useState<{ userId: string }[] | null>([]);
 
   // Extract data and document IDs from the snapshot

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks/reduxTypeScriptHooks";
 import { login } from "../userSlice";
 import "firebase/compat/auth";
 
@@ -12,7 +12,7 @@ export const useSignInEmailPassword = (
   setAuthenticating: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>(""); // Move the state hook inside this custom hook
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
   const signInWithEmailPassword = async (values: {

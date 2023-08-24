@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { auth } from "../../../utils/firebase";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks/reduxTypeScriptHooks";
 import { login } from "../userSlice";
 
 export const useSignedinDispatchUserInfo = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {

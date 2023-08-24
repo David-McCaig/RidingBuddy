@@ -1,14 +1,12 @@
 import NavBar from "../features/navigation/Components/NavBar";
-import LoadingBar from "../Components/LoadingBar";
 import RidePosted from "../features/postedrides/Component/RidePosted";
 import ProfileCard from "../Components/ProfileCard";
 import { useSignedinDispatchUserInfo } from "../features/authentication/hooks/useSignedinDispatchUserInfo";
-import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { logout, selectUser } from "../features/authentication/userSlice.js";
+import { selectUser } from "../features/authentication/userSlice.js";
 import { db } from "../utils/firebase";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks/reduxTypeScriptHooks";
 
 
 interface PostData {
@@ -19,12 +17,12 @@ interface PostData {
 }
 
 function HomePage() {
-  const user = useSelector(selectUser);
+  const user = useAppSelector(selectUser);
   useSignedinDispatchUserInfo();
 
   const collectionRef = collection(db, `ridePosts`);
   const [snapshot, loading, error] = useCollection(collectionRef);
-  console.log(loading)
+
   const posts: PostData[] =
     snapshot?.docs.map((doc) => ({ id: doc.id, ...doc.data() })) || [];
 
