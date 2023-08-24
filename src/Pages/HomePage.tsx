@@ -10,7 +10,8 @@ import { db } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-interface RideData {
+
+interface PostData {
   id: string;
   user_name?: string;
   ride_title?: string;
@@ -18,24 +19,22 @@ interface RideData {
 }
 
 function HomePage() {
-  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   useSignedinDispatchUserInfo();
 
   const collectionRef = collection(db, `ridePosts`);
   const [snapshot, loading, error] = useCollection(collectionRef);
-
-  const posts: RideData[] =
+  console.log(loading)
+  const posts: PostData[] =
     snapshot?.docs.map((doc) => ({ id: doc.id, ...doc.data() })) || [];
 
   return (
     <div className="flex sm:justify-center bg-gray-50 xl:px-32 ">
       <NavBar />
-      {/* <div className="sm:w-[15rem] lg:w-[18rem] xl:w-[100px] h-[20rem]"></div> */}
       <div className="flex flex-col">
         {posts?.map((post) => (
           <div key={post.id} className="pt-12 ">
-            <RidePosted post={post} loading={loading} error={error} />
+            <RidePosted id={post.id || ''} userName={post.user_name || ''} rideTitle={post.ride_title || ''} rideDescription={post.ride_description || ''}  loading={loading} error={error} />
           </div>
         ))}
       </div>

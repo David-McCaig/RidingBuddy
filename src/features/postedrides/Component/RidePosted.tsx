@@ -10,6 +10,7 @@ import {
   where,
   deleteDoc,
   doc,
+  FirestoreError,
 } from "firebase/firestore";
 import LoadingBar from "../../../Components/LoadingBar";
 import { CommentOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons";
@@ -17,15 +18,23 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../authentication/userSlice";
 
-interface RideData {
+interface postDataProps {
+  loading: boolean;
+  error: any;
+  userName: string;
   id: string;
-  user_id: string;
-  user_name?: string;
-  ride_title?: string;
-  ride_description?: string;
+  rideTitle: string;
+  rideDescription: string;
 }
 
-function RidePost({ loading, error, post }: any) {
+function RidePost({
+  userName,
+  id,
+  rideTitle,
+  rideDescription,
+  loading,
+  error,
+}: postDataProps) {
   const loggedInUser = useSelector(selectUser);
   const [likes, setLikes] = useState<{ userId: string }[] | null>([]);
 
@@ -48,7 +57,7 @@ function RidePost({ loading, error, post }: any) {
   const deleteALike = async () => {
     const likesToDeleteQuery = query(
       likesRef,
-      where("post_id", "==", post.id),
+      where("post_id", "==", id),
       where("user_id", "==", loggedInUser.userId)
     );
     try {
@@ -61,10 +70,10 @@ function RidePost({ loading, error, post }: any) {
     }
   };
 
-  const likesDoc = query(likesRef, where("post_id", "==", post.id));
+  const likesDocQuery = query(likesRef, where("post_id", "==", id));
 
   const getLike = async () => {
-    const data = await getDocs(likesDoc);
+    const data = await getDocs(likesDocQuery);
     if (loggedInUser) {
       setLikes(data.docs.map((doc) => ({ userId: doc.data().user_id })));
     }
@@ -88,22 +97,20 @@ function RidePost({ loading, error, post }: any) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {error}</div>;
   }
 
-  if (!post || post.empty) {
+  if (!id) {
     return <div>No data found.</div>;
   }
 
   return (
-    <section key={post?.id} className="flex justify-center mt-4 ">
+    <section key={id} className="flex justify-center mt-4 ">
       <div className="rounded-xl border p-5 drop-shadow-sm w-9/12 xl:w-11/12 bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">
             <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
-            <div className="text-lg font-bold text-slate-700">
-              {post?.user_name}
-            </div>
+            <div className="text-lg font-bold text-slate-700">{userName}</div>
           </div>
           <div className="flex items-center space-x-8">
             <div className="text-xs text-neutral-500">2 hours ago</div>
@@ -111,11 +118,9 @@ function RidePost({ loading, error, post }: any) {
         </div>
 
         <div className="mt-4 mb-6">
-          <h3 className="mb-3 text-xl font-medium md:text-2xl">
-            {post?.ride_title}
-          </h3>
+          <h3 className="mb-3 text-xl font-medium md:text-2xl">{rideTitle}</h3>
           <div className="text-sm md:text-base text-neutral-600">
-            {post?.ride_description}
+            {rideDescription}
           </div>
         </div>
 
@@ -134,7 +139,7 @@ function RidePost({ loading, error, post }: any) {
                   />
                 ) : (
                   <HeartOutlined
-                    onClick={() => PostALike(post.id)}
+                    onClick={() => PostALike(id)}
                     className="mr-2.5 mb-1 text-lg  "
                   />
                 )}
@@ -143,8 +148,8 @@ function RidePost({ loading, error, post }: any) {
             </div>
           </div>
         </div>
-        <RideComment path={`ridePosts/${post?.id}/comments`} />
-        <RidePostAComment id={post?.id} />
+        <RideComment path={`ridePosts/${id}/comments`} />
+        <RidePostAComment id={id} />
       </div>
     </section>
   );
