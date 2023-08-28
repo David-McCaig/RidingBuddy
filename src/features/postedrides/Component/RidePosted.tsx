@@ -1,6 +1,7 @@
 import { useCollection } from "react-firebase-hooks/firestore";
 import RideComment from "./RideComment";
 import RidePostAComment from "./RidePostAComment";
+import RidePostedModal from "../RidePostedModal";
 import { db } from "../../../utils/firebase";
 import {
   collection,
@@ -14,10 +15,11 @@ import {
 } from "firebase/firestore";
 import LoadingBar from "../../../Components/LoadingBar";
 import { CommentOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo} from "react";
 import { useSelector } from "react-redux";
 import { useAppSelector } from "../../../hooks/reduxTypeScriptHooks";
 import { selectUser } from "../../authentication/userSlice";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 interface postDataProps {
   loading: boolean;
@@ -40,6 +42,14 @@ function RidePost({
   const [likes, setLikes] = useState<{ userId: string }[] | null>([]);
 
   // Extract data and document IDs from the snapshot
+
+  const [open, setOpen] = useState(false)
+
+  const openModalCLick = () => {
+    setOpen(true)
+  }
+
+
 
   const likesRef = collection(db, "likes");
 
@@ -106,8 +116,7 @@ function RidePost({
   }
 
   return (
-    <section key={id} className="flex justify-center mt-4 ">
-      <div className="rounded-xl border p-5 drop-shadow-sm w-9/12 xl:w-11/12 bg-white">
+    <div>
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">
             <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
@@ -149,10 +158,11 @@ function RidePost({
             </div>
           </div>
         </div>
-        <RideComment path={`ridePosts/${id}/comments`} />
-        <RidePostAComment id={id} />
-      </div>
-    </section>
+        {/* <RidePostAComment id={id} />
+        <RideComment path={`ridePosts/${id}/comments`} /> */}
+        <RidePostedModal id={id} path={``} open={open} setOpen={setOpen} />
+        <h3 onClick={openModalCLick} >Load more comments</h3>
+     </div>
   );
 }
 

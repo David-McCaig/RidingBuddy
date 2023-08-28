@@ -9,6 +9,7 @@ interface PathProps {
 }
 
 function RideComment({ path }: PathProps) {
+
   const query = collection(db, path);
   const [docs, error] = useCollectionData(query);
 

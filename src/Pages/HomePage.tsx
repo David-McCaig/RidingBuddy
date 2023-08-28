@@ -1,13 +1,14 @@
 import NavBar from "../features/navigation/Components/NavBar";
 import RidePosted from "../features/postedrides/Component/RidePosted";
 import ProfileCard from "../Components/ProfileCard";
+import RidePostAComment from "../features/postedrides/Component/RidePostAComment";
+import RideComment from "../features/postedrides/Component/RideComment";
 import { useSignedinDispatchUserInfo } from "../features/authentication/hooks/useSignedinDispatchUserInfo";
 import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { selectUser } from "../features/authentication/userSlice.js";
 import { db } from "../utils/firebase";
 import { useAppSelector } from "../hooks/reduxTypeScriptHooks";
-
 
 interface PostData {
   id: string;
@@ -31,8 +32,21 @@ function HomePage() {
       <NavBar />
       <div className="flex flex-col">
         {posts?.map((post) => (
-          <div key={post.id} className="pt-12 ">
-            <RidePosted id={post.id || ''} userName={post.user_name || ''} rideTitle={post.ride_title || ''} rideDescription={post.ride_description || ''}  loading={loading} error={error} />
+          <div key={post.id} className="pt-12">
+            <section className="flex justify-center mt-4 ">
+              <div className="rounded-xl border p-5 drop-shadow-sm w-9/12 xl:w-11/12 bg-white">
+                <RidePosted
+                  id={post.id || ""}
+                  userName={post.user_name || ""}
+                  rideTitle={post.ride_title || ""}
+                  rideDescription={post.ride_description || ""}
+                  loading={loading}
+                  error={error}
+                />
+                <RidePostAComment id={post.id} />
+                <RideComment path={`ridePosts/${post.id}/comments`} />
+              </div>
+            </section>
           </div>
         ))}
       </div>
