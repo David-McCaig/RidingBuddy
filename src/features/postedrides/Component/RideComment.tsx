@@ -1,17 +1,18 @@
-import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../../../utils/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
+import { collection, query, where, getDocs, orderBy, limit } from "firebase/firestore";
+import { HeartOutlined } from "@ant-design/icons";
 
 interface PathProps {
   path: string;
+  queryLimit: number
 }
 
-function RideComment({ path }: PathProps) {
+function RideComment({ path,queryLimit }: PathProps) {
 
-  const query = collection(db, path);
-  const [docs, error] = useCollectionData(query);
+  const commentQuery = query(collection(db, path), limit(queryLimit))
+   
+  const [docs, error] = useCollectionData(commentQuery);
 
   return (
     <>

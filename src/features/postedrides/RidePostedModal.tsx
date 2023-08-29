@@ -1,31 +1,13 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import RidePostComment from "./Component/RidePostAComment";
+import RideComment from "./Component/RideComment";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import RidePosted from "./Component/RidePosted";
-import {
-  useCollectionData,
-  useDocumentData,
-} from "react-firebase-hooks/firestore";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  query,
-  where,
-  deleteDoc,
-  doc,
-  FirestoreError,
-} from "firebase/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { doc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 
-interface PostData {
-  id: string;
-  user_name?: string;
-  ride_title?: string;
-  ride_description?: string;
-}
-
-function RidePostedModal({ id, open, setOpen, path }: any) {
+function RidePostedModal({ id, open, setOpen }: any) {
   const cancelButtonRef = useRef(null);
  
   const docRef = doc(db, "ridePosts", id);
@@ -72,6 +54,8 @@ function RidePostedModal({ id, open, setOpen, path }: any) {
                     loading={loading}
                     error={error}
                   />
+                  <RidePostComment id={id} />
+                  <RideComment path={`ridePosts/${id}/comments`} queryLimit={100}/>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

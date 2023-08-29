@@ -18,6 +18,7 @@ interface PostData {
 }
 
 function HomePage() {
+
   const user = useAppSelector(selectUser);
   useSignedinDispatchUserInfo();
 
@@ -44,7 +45,7 @@ function HomePage() {
                   error={error}
                 />
                 <RidePostAComment id={post.id} />
-                <RideComment path={`ridePosts/${post.id}/comments`} />
+                <RideComment path={`ridePosts/${post.id}/comments`} queryLimit={3} />
               </div>
             </section>
           </div>

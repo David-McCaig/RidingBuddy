@@ -1,6 +1,3 @@
-import { useCollection } from "react-firebase-hooks/firestore";
-import RideComment from "./RideComment";
-import RidePostAComment from "./RidePostAComment";
 import RidePostedModal from "../RidePostedModal";
 import { db } from "../../../utils/firebase";
 import {
@@ -11,15 +8,12 @@ import {
   where,
   deleteDoc,
   doc,
-  FirestoreError,
 } from "firebase/firestore";
 import LoadingBar from "../../../Components/LoadingBar";
 import { CommentOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { useEffect, useState, useMemo} from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/reduxTypeScriptHooks";
 import { selectUser } from "../../authentication/userSlice";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 
 interface postDataProps {
   loading: boolean;
@@ -45,11 +39,9 @@ function RidePost({
 
   const [open, setOpen] = useState(false)
 
-  const openModalCLick = () => {
+  const openModalClick = () => {
     setOpen(true)
   }
-
-
 
   const likesRef = collection(db, "likes");
 
@@ -158,10 +150,8 @@ function RidePost({
             </div>
           </div>
         </div>
-        {/* <RidePostAComment id={id} />
-        <RideComment path={`ridePosts/${id}/comments`} /> */}
         <RidePostedModal id={id} path={``} open={open} setOpen={setOpen} />
-        <h3 onClick={openModalCLick} >Load more comments</h3>
+        <h3 onClick={openModalClick} >Load more comments</h3>
      </div>
   );
 }
